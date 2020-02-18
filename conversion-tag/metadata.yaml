@@ -1,0 +1,5 @@
+homepage: "https://www.pepperjam.com"
+documentation: "https://www.pepperjam.com/documentation"
+versions:
+  - sha:7dc261899769131fd7456fc763eaf5fe61dc5e7d
+    changeNotes: Initial release.
