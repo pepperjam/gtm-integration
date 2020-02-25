@@ -164,17 +164,12 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 //APIs
-const injectScript = require('injectScript');
+const injectScript = require('injectHiddenIframe');
 const queryPermission = require('queryPermission');
 const log = require('logToConsole');
-const query = require('queryPermission');
 const getDL = require('copyFromDataLayer');
-const copyFromWindow = require('copyFromWindow');
-//const getUrl = require('getUrl');
-const getQueryParameters = require('getQueryParameters');
 
 //Tag Inputs
-const integrationType = data.integrationType;
 const programID = data.programID;
 //dropDown Input
 const pixelTypeValidation = data.pixelTypeValidation;
@@ -241,7 +236,7 @@ if (dataLayerType == 'gtm') {
   }
   //ADDS productsArray TO THE urlSRC ARRAY
   urlSRC.push(productsArray.join("&"));
-  
+
   //CHECKS IF THE USER HAS ENABLED COUPONS
   if (couponCheckbox == true) {
     const couponTransaction = getDL('ecommerce.purchase.actionField.coupon');
@@ -257,20 +252,12 @@ if (dataLayerType == 'gtm') {
     	urlSRC.push("COUPON=" + couponArray.join(","));
   	}
   }
-  
+
   //CHECKS IF THE USER HAS ENABLED USER TYPE
   if(userTypeValidation == true){
     urlSRC.push("NEW_TO_FILE=" + userType);
   }
-  
-  /////////////////////////////////////////////////
-  //--- VERIFY HOW CLICK ID IS POPULATED IN PJ---//
-  /////////////////////////////////////////////////
-  
-  /*/CHECKS IF THE USER HAS ENABLED USER TYPE
-  const clickID = getQueryParameters('clickId');
-  urlSRC.push("CLICK_ID=" + clickID);*/
-  
+
   //CHECKS IF THE USER HAS ENABLED PIXEL TYPE
   if(pixelTypeValidation == true){
     urlSRC.push("TYPE=" + pixelType);
@@ -282,26 +269,26 @@ if (dataLayerType == 'gtm') {
   //log("couponArray: " + couponArray.join(","));
   log("urlSRC:" + urlSRC);
   const url = "https://t.pepperjamnetwork.com/track?"+"INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
-  log('Pepperjam: Loading script from ' + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
+  log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
 
   // If the script loaded successfully, log a message and signal success
   const onSuccess = () => {
-    log('Pepperjam: Conversion script loaded successfully.');
+    log("Pepperjam: Conversion script loaded successfully.");
     data.gtmOnSuccess();
   };
 
   // If the script fails to load, log a message and signal failure
   const onFailure = () => {
-    log('Pepperjam: Conversion script load failed.');
+    log("Pepperjam: Conversion script load failed.");
     data.gtmOnFailure();
   };
 
   // If the URL input by the user matches the permissions set for the template,
   // inject the script with the onSuccess and onFailure methods as callbacks.
-  if (queryPermission('inject_script', url)) {
-    injectScript(url, onSuccess, onFailure);
+  if (queryPermission('inject_hidden_iframe', url)) {
+    injectScript(url, onSuccess);
   } else {
-    log('Pepperjam: Conversion script load failed due to permissions mismatch.');
+    log("Pepperjam: Conversion script load failed due to permissions mismatch.");
     data.gtmOnFailure();
   }
 
@@ -352,7 +339,7 @@ if (dataLayerType == 'gtm') {
   }
   //ADDS productsArray TO THE urlSRC ARRAY
   urlSRC.push(productsArray.join("&"));
-  
+
   //CHECKS IF THE USER HAS ENABLED COUPONS
   if (couponCheckbox == true) {
     const couponTransaction = userVar.ecommerce.purchase.actionField.coupon;
@@ -373,15 +360,7 @@ if (dataLayerType == 'gtm') {
   if(userTypeValidation == true){
     urlSRC.push("NEW_TO_FILE=" + userType);
   }
-  
-  /////////////////////////////////////////////////
-  //--- VERIFY HOW CLICK ID IS POPULATED IN PJ---//
-  /////////////////////////////////////////////////
-  
-  /*/CHECKS IF THE USER HAS ENABLED USER TYPE
-  const clickID = getQueryParameters('clickId');
-  urlSRC.push("CLICK_ID=" + clickID);*/
-  
+
   //CHECKS IF THE USER HAS ENABLED PIXEL TYPE
   if(pixelTypeValidation == true){
     urlSRC.push("TYPE=" + pixelType);
@@ -389,7 +368,7 @@ if (dataLayerType == 'gtm') {
     urlSRC.push("TYPE=1");
   }
   const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
-  log('Pepperjam: Loading script from ' + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
+  log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
 
   // If the script loaded successfully, log a message and signal success
   const onSuccess = () => {
@@ -399,16 +378,16 @@ if (dataLayerType == 'gtm') {
 
   // If the script fails to load, log a message and signal failure
   const onFailure = () => {
-    log('Pepperjam: Conversion script load failed.');
+    log("Pepperjam: Conversion script load failed.");
     data.gtmOnFailure();
   };
 
   // If the URL input by the user matches the permissions set for the template,
   // inject the script with the onSuccess and onFailure methods as callbacks.
-  if (queryPermission('inject_script', url)) {
-    injectScript(url, onSuccess, onFailure);
+  if (queryPermission('inject_hidden_iframe', url)) {
+    injectScript(url, onSuccess);
   } else {
-    log('Pepperjam: Conversion script load failed due to permissions mismatch.');
+    log("Pepperjam: Conversion script load failed due to permissions mismatch.");
     data.gtmOnFailure();
   }
 }
@@ -432,16 +411,6 @@ ___WEB_PERMISSIONS___
           }
         }
       ]
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "access_globals",
-        "versionId": "1"
-      },
-      "param": []
     },
     "isRequired": true
   },
@@ -478,7 +447,7 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "inject_script",
+        "publicId": "inject_hidden_iframe",
         "versionId": "1"
       },
       "param": [
@@ -489,11 +458,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://container.pepperjam.com/"
-              },
-              {
-                "type": 1,
-                "string": "https://t.pepperjamnetwork.com/"
+                "string": "https://t.pepperjamnetwork.com/*"
               }
             ]
           }
@@ -502,31 +467,6 @@ ___WEB_PERMISSIONS___
     },
     "clientAnnotations": {
       "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "get_url",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "urlParts",
-          "value": {
-            "type": 1,
-            "string": "any"
-          }
-        },
-        {
-          "key": "queriesAllowed",
-          "value": {
-            "type": 1,
-            "string": "any"
-          }
-        }
-      ]
     },
     "isRequired": true
   }
@@ -540,6 +480,4 @@ scenarios: []
 
 ___NOTES___
 
-Created on 2/18/2020, 1:55:06 PM
-
-
+Created on 2/25/2020, 3:44:31 PM
