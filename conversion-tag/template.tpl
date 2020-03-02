@@ -180,7 +180,7 @@ const userTypeValidation = data.userTypeValidation;
 const userType = data.userType;
 //dataLayerType
 const dataLayerType = data.dataLayerType;
-log('data =', data);
+//log('data =', data);
 
 //Optional Parameter - GTM Data Layer
 const categoryCheckbox = data.categoryCheckbox;
@@ -240,8 +240,10 @@ if (dataLayerType == 'gtm') {
   //CHECKS IF THE USER HAS ENABLED COUPONS
   if (couponCheckbox == true) {
     const couponTransaction = getDL('ecommerce.purchase.actionField.coupon');
-	//log("couponTrans: " + couponTransaction);
-    couponArray.push(couponTransaction);
+    if(couponTransaction !=undefined){
+		//log("couponTrans: " + couponTransaction);
+    	couponArray.push(couponTransaction);
+    }
     products.forEach(function(pi, index) {
       if (pi.coupon){
     	couponArray.push(pi.coupon);
@@ -343,8 +345,10 @@ if (dataLayerType == 'gtm') {
   //CHECKS IF THE USER HAS ENABLED COUPONS
   if (couponCheckbox == true) {
     const couponTransaction = userVar.ecommerce.purchase.actionField.coupon;
-	//log("couponTrans: " + couponTransaction);
-    couponArray.push(couponTransaction);
+	if(couponTransaction !=undefined){
+		//log("couponTrans: " + couponTransaction);
+    	couponArray.push(couponTransaction);
+    }
     products.forEach(function(pi, index) {
       if (pi.coupon){
     	couponArray.push(pi.coupon);
@@ -480,4 +484,4 @@ scenarios: []
 
 ___NOTES___
 
-Created on 2/25/2020, 3:44:31 PM
+Created on 3/2/2020, 3:57:33 PM
