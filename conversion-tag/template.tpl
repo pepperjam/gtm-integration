@@ -240,7 +240,7 @@ if (dataLayerType == 'gtm') {
   //CHECKS IF THE USER HAS ENABLED COUPONS
   if (couponCheckbox == true) {
     const couponTransaction = getDL('ecommerce.purchase.actionField.coupon');
-    if(couponTransaction !=undefined){
+    if(couponTransaction !=undefined && couponTransaction.length > 0){
 		//log("couponTrans: " + couponTransaction);
     	couponArray.push(couponTransaction);
     }
@@ -269,7 +269,7 @@ if (dataLayerType == 'gtm') {
   //log("transactionID: " + transactionID);
   //log("productsArray: " + productsArray.join("&"));
   //log("couponArray: " + couponArray.join(","));
-  log("urlSRC:" + urlSRC);
+  //log("urlSRC:" + urlSRC);
   const url = "https://t.pepperjamnetwork.com/track?"+"INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
   log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
 
@@ -299,7 +299,7 @@ if (dataLayerType == 'gtm') {
 //---------------------------------------------------------------------------------------------//
 
 }else if (dataLayerType == 'udv') {
-  log("UDV Transaction ID:" + userVar.ecommerce.purchase.actionField.id);
+  //log("UDV Transaction ID:" + userVar.ecommerce.purchase.actionField.id);
   const transactionID = userVar.ecommerce.purchase.actionField.id;
   urlSRC.push("ORDER_ID="+transactionID);
   const products = userVar.ecommerce.purchase.products;
@@ -345,8 +345,8 @@ if (dataLayerType == 'gtm') {
   //CHECKS IF THE USER HAS ENABLED COUPONS
   if (couponCheckbox == true) {
     const couponTransaction = userVar.ecommerce.purchase.actionField.coupon;
-	if(couponTransaction !=undefined){
-		//log("couponTrans: " + couponTransaction);
+	if(couponTransaction !=undefined && couponTransaction.length > 0){
+		//log("couponTrans: " + couponTransaction.length);
     	couponArray.push(couponTransaction);
     }
     products.forEach(function(pi, index) {
@@ -484,4 +484,4 @@ scenarios: []
 
 ___NOTES___
 
-Created on 3/2/2020, 3:57:33 PM
+Created on 3/3/2020, 10:45:59 AM
