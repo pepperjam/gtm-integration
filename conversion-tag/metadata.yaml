@@ -2,9 +2,12 @@ homepage: "https://www.pepperjam.com"
 documentation: "https://www.pepperjam.com/documentation"
 versions:
 # Latest version
+  - sha:7f7d00ca664d7534ace1807bec29358e7df6a4f1
+    changeNotes: Order coupons check
+ # Older versions   
   - sha:e2653c7472d0f34a0cb027c3e9ddca0706bbd2ff
     changeNotes: Edit around order coupons
-#Older versions
+
   - sha:9009d0618766d6b2d2ad82257c6d729da27fb095
     changeNotes: Changed API and Permissions for injectHiddenIframe.
     
