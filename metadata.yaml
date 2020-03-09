@@ -1,0 +1,5 @@
+homepage: "https://www.pepperjam.com"
+documentation: "https://www.pepperjam.com/documentation"
+versions:
+  - sha: e2ea7127ea365194653c7b67d7aa7303c02c7f4a
+    changeNotes: Consolidated two tag templates into one template. This is the initial commit of the new template.

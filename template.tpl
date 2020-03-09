@@ -13,7 +13,7 @@ ___INFO___
   "id": "cvt_temp_public_id",
   "version": 1,
   "securityGroups": [],
-  "displayName": "Pepperjam Conversion Tag",
+  "displayName": "Pepperjam Tag",
   "categories": ["AFFILIATE_MARKETING", "ADVERTISING"],
   "brand": {
     "id": "github.com/pepperjam/gtm-integration",
@@ -31,130 +31,186 @@ ___TEMPLATE_PARAMETERS___
 
 [
   {
-    "type": "TEXT",
-    "name": "programID",
-    "displayName": "Program ID",
-    "simpleValueType": true,
-    "valueValidators": [
-      {
-        "type": "NON_EMPTY"
-      }
-    ],
-    "help": "Enter your Pepperjam program ID. Contact your Pepperjam account rep if you don\u0027t have this number"
-  },
-  {
     "type": "SELECT",
-    "name": "dataLayerType",
-    "displayName": "Transaction Object",
-    "macrosInSelect": false,
+    "name": "tagType",
+    "displayName": "Tag Type",
     "selectItems": [
       {
-        "value": "gtm",
-        "displayValue": "Enhanced Ecommerce Data Layer"
+        "value": "container",
+        "displayValue": "Container Tag"
       },
       {
-        "value": "udv",
-        "displayValue": "User Defined Variable"
+        "value": "conversion",
+        "displayValue": "Conversion Tag"
       }
     ],
     "simpleValueType": true,
-    "help": "If your container is currently using GTM\u0027s enhance ecommerce feature select \"Enhanced Ecommerce Data Layer\". If you are currently not using that feature select \"User Defined Variable\". Refer to Pepperjam\u0027s documentation on how to create the user defined variable."
+    "help": "Select which tag"
   },
   {
     "type": "GROUP",
-    "name": "userDefinedGroup",
-    "displayName": "",
+    "name": "container",
     "groupStyle": "NO_ZIPPY",
     "subParams": [
       {
         "type": "TEXT",
-        "name": "userVar",
-        "displayName": "User Defined Variable",
+        "name": "advertiserID",
+        "displayName": "Container Tag ID",
         "simpleValueType": true,
-        "help": "Ensure that the user defined variable returns a string with the parameters in the proper order. ORDER_ID\u003d\u003cORDER_ID\u003e\u0026ITEM_ID1\u003d\u003cITEM_ID\u003e\u0026ITEM_PRICE1\u003d\u003cITEM_PRICE\u003e\u0026QUANTITY1\u003d\u003cQUANTITY\u003e\u0026CATEGORY1\u003d\u003cCATEGORY\u003e\u0026COUPON\u003d\u003cCOUPON\u003e,\u003cCOUPON\u003e"
+        "help": "Unique ID required for each advertiser. The ID can be found here: https://ascend.pepperjam.com/merchant/integration on the Container Tag tab or you can reach out to your account manager",
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          }
+        ]
       }
     ],
     "enablingConditions": [
       {
-        "paramName": "dataLayerType",
-        "paramValue": "udv",
+        "paramName": "tagType",
+        "paramValue": "container",
         "type": "EQUALS"
       }
     ]
   },
   {
-    "type": "CHECKBOX",
-    "name": "pixelTypeValidation",
-    "checkboxText": "Transaction Type Parameter (Optional)",
-    "simpleValueType": true,
-    "help": "Transaction Type If not supplied, sale is assumed.",
-    "subParams": [
-      {
-        "type": "SELECT",
-        "name": "pixelType",
-        "macrosInSelect": true,
-        "selectItems": [
-          {
-            "value": 1,
-            "displayValue": "sale"
-          },
-          {
-            "value": 2,
-            "displayValue": "lead"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": 1,
-        "enablingConditions": [
-          {
-            "paramName": "pixelTypeValidation",
-            "paramValue": true,
-            "type": "EQUALS"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "type": "CHECKBOX",
-    "name": "userTypeValidation",
-    "checkboxText": "User Type Parameter (Optional)",
-    "simpleValueType": true,
-    "help": "Whether or not the customer that placed the order is a new customer in your system using whatever business logic you deem appropriate.  Note: This value should be 1 (one) if the customer is new or 0 (zero) if the customer is not new.",
+    "type": "GROUP",
+    "name": "conversion",
+    "displayName": "",
+    "groupStyle": "NO_ZIPPY",
     "subParams": [
       {
         "type": "TEXT",
-        "name": "userType",
+        "name": "programID",
+        "displayName": "Program ID",
         "simpleValueType": true,
+        "help": "Enter your Pepperjam program ID. Contact your Pepperjam account rep if you don\u0027t have this number",
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          }
+        ]
+      },
+      {
+        "type": "SELECT",
+        "name": "dataLayerType",
+        "displayName": "Transaction Object",
+        "selectItems": [
+          {
+            "value": "gtm",
+            "displayValue": "Enhanced Ecommerce Data Layer"
+          },
+          {
+            "value": "udv",
+            "displayValue": "User Defined Variable"
+          }
+        ],
+        "simpleValueType": true,
+        "help": "If your container is currently using GTM\u0027s enhance ecommerce feature select \"Enhanced Ecommerce Data Layer\". If you are currently not using that feature select \"User Defined Variable\". Refer to Pepperjam\u0027s documentation on how to create the user defined variable."
+      },
+      {
+        "type": "GROUP",
+        "name": "userDefinedGroup",
+        "groupStyle": "NO_ZIPPY",
+        "subParams": [
+          {
+            "type": "TEXT",
+            "name": "userVar",
+            "displayName": "User Defined Variable",
+            "simpleValueType": true,
+            "help": "Ensure that the user defined variable returns a string with the parameters in the proper order. ORDER_ID\u003d\u003cORDER_ID\u003e\u0026ITEM_ID1\u003d\u003cITEM_ID\u003e\u0026ITEM_PRICE1\u003d\u003cITEM_PRICE\u003e\u0026QUANTITY1\u003d\u003cQUANTITY\u003e\u0026CATEGORY1\u003d\u003cCATEGORY\u003e\u0026COUPON\u003d\u003cCOUPON\u003e,\u003cCOUPON\u003e"
+          }
+        ],
         "enablingConditions": [
           {
-            "paramName": "userTypeValidation",
-            "paramValue": true,
+            "paramName": "dataLayerType",
+            "paramValue": "udv",
             "type": "EQUALS"
           }
         ]
-      }
-    ]
-  },
-  {
-    "type": "GROUP",
-    "name": "optionalFieldsGTM",
-    "displayName": "Optional Product Parameters",
-    "groupStyle": "ZIPPY_CLOSED",
-    "subParams": [
-      {
-        "type": "CHECKBOX",
-        "name": "categoryCheckbox",
-        "checkboxText": "Item Category",
-        "simpleValueType": true,
-        "help": "Enable to collect item category data"
       },
       {
         "type": "CHECKBOX",
-        "name": "couponCheckbox",
-        "checkboxText": "Transaction/Item Coupon",
+        "name": "pixelTypeValidation",
+        "checkboxText": "Transaction Type Parameter (Optional)",
         "simpleValueType": true,
-        "help": "Enable to collect transaction/item coupon data"
+        "help": "Transaction Type If not supplied, sale is assumed.",
+        "subParams": [
+          {
+            "type": "SELECT",
+            "name": "pixelType",
+            "macrosInSelect": true,
+            "selectItems": [
+              {
+                "value": 1,
+                "displayValue": "sale"
+              },
+              {
+                "value": 2,
+                "displayValue": "lead"
+              }
+            ],
+            "simpleValueType": true,
+            "defaultValue": 1,
+            "enablingConditions": [
+              {
+                "paramName": "pixelTypeValidation",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "userTypeValidation",
+        "checkboxText": "User Type Parameter (Optional)",
+        "simpleValueType": true,
+        "help": "Whether or not the customer that placed the order is a new customer in your system using whatever business logic you deem appropriate.  Note: This value should be 1 (one) if the customer is new or 0 (zero) if the customer is not new.",
+        "subParams": [
+          {
+            "type": "TEXT",
+            "name": "userType",
+            "simpleValueType": true,
+            "enablingConditions": [
+              {
+                "paramName": "userTypeValidation",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "GROUP",
+        "name": "optionalFieldsGTM",
+        "displayName": "Optional Product Parameters",
+        "groupStyle": "ZIPPY_CLOSED",
+        "subParams": [
+          {
+            "type": "CHECKBOX",
+            "name": "categoryCheckbox",
+            "checkboxText": "Item Category",
+            "simpleValueType": true,
+            "help": "Enable to collect item category data"
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "couponCheckbox",
+            "checkboxText": "Transaction/Item Coupon",
+            "simpleValueType": true,
+            "help": "Enable to collect transaction/item coupon data"
+          }
+        ]
+      }
+    ],
+    "enablingConditions": [
+      {
+        "paramName": "tagType",
+        "paramValue": "conversion",
+        "type": "EQUALS"
       }
     ]
   }
@@ -163,13 +219,21 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-//APIs
-const injectScript = require('injectHiddenIframe');
+// Require the necessary APIs
+const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
+const logToConsole = require('logToConsole');
+const injectIframe = require('injectHiddenIframe');
 const log = require('logToConsole');
 const getDL = require('copyFromDataLayer');
 
 //Tag Inputs
+const tagType = data.tagType;
+//Container Tag
+//Container ID
+const aID = data.advertiserID;
+//Conversion Tag
+//Program ID
 const programID = data.programID;
 //dropDown Input
 const pixelTypeValidation = data.pixelTypeValidation;
@@ -193,206 +257,237 @@ const urlSRC = [];
 const productsArray = [];
 const couponArray = [];
 
-//IF THE USER IS USING GTM'S DATA LAYER
-if (dataLayerType == 'gtm') {
-  const transactionID = getDL('ecommerce.purchase.actionField.id');
-  urlSRC.push("ORDER_ID="+transactionID);
-  const products = getDL('ecommerce.purchase.products');
-  //CHECKS IF THE USER HAS ENABLED ITEM CATEGORY
-  if (categoryCheckbox == true) {
-    products.forEach(function(pi, index) {
-      if (pi.id) {
-        productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
-        //log("ITEM_ID" + (index + 1) + "=" + pi.id);
-      }
-      if (pi.price) {
-        productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-        //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-      }
-      if (pi.quantity) {
-        productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
-        //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
-      }
-      if (pi.category) {
-        productsArray.push("CATEGORY" + (index + 1) + "=" + pi.category);
-        //log("CATEGORY" + (index + 1) + "=" + pi.category);
-      }
-    });
-  } else {
-    products.forEach(function(pi, index) {
-      if (pi.id) {
-        productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
-        //log("ITEM" + (index + 1) + "=" + pi.id);
-      }
-      if (pi.price) {
-        productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-        //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-      }
-      if (pi.quantity) {
-        productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
-        //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
-      }
-    });
-  }
-  //ADDS productsArray TO THE urlSRC ARRAY
-  urlSRC.push(productsArray.join("&"));
+//
+if (tagType == 'container') {
+  const url = 'https://container.pepperjam.com/' + aID + '.js';
+  // If the user chose to log debug output, initialize the logging method
+  const log = data.debug ? logToConsole : (() => {});
 
-  //CHECKS IF THE USER HAS ENABLED COUPONS
-  if (couponCheckbox == true) {
-    const couponTransaction = getDL('ecommerce.purchase.actionField.coupon');
-    if(couponTransaction !=undefined && couponTransaction.length > 0){
-		//log("couponTrans: " + couponTransaction);
-    	couponArray.push(couponTransaction);
-    }
-    products.forEach(function(pi, index) {
-      if (pi.coupon){
-    	couponArray.push(pi.coupon);
-       	//log("couponItem: " + pi.coupon);
-      }
-    });
-    if(couponArray.length >0){
-    	urlSRC.push("COUPON=" + couponArray.join(","));
-  	}
-  }
-
-  //CHECKS IF THE USER HAS ENABLED USER TYPE
-  if(userTypeValidation == true){
-    urlSRC.push("NEW_TO_FILE=" + userType);
-  }
-
-  //CHECKS IF THE USER HAS ENABLED PIXEL TYPE
-  if(pixelTypeValidation == true){
-    urlSRC.push("TYPE=" + pixelType);
-  }else{
-    urlSRC.push("TYPE=1");
-  }
-  //log("transactionID: " + transactionID);
-  //log("productsArray: " + productsArray.join("&"));
-  //log("couponArray: " + couponArray.join(","));
-  //log("urlSRC:" + urlSRC);
-  const url = "https://t.pepperjamnetwork.com/track?"+"INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
-  log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
+  log('Pepperjam: Loading script from ' + aID);
 
   // If the script loaded successfully, log a message and signal success
   const onSuccess = () => {
-    log("Pepperjam: Conversion script loaded successfully.");
+    log('Pepperjam: Global script loaded successfully.');
     data.gtmOnSuccess();
   };
 
   // If the script fails to load, log a message and signal failure
   const onFailure = () => {
-    log("Pepperjam: Conversion script load failed.");
+    log('Pepperjam: Global script load failed.');
     data.gtmOnFailure();
   };
 
   // If the URL input by the user matches the permissions set for the template,
   // inject the script with the onSuccess and onFailure methods as callbacks.
-  if (queryPermission('inject_hidden_iframe', url)) {
-    injectScript(url, onSuccess);
+  if (queryPermission('inject_script', url)) {
+    injectScript(url, onSuccess, onFailure);
   } else {
-    log("Pepperjam: Conversion script load failed due to permissions mismatch.");
+    log('Pepperjam: Global script load failed due to permissions mismatch.');
     data.gtmOnFailure();
   }
-
-//---------------------------------------------------------------------------------------------//
-//-----------------------------------------USER DEFINED----------------------------------------//
-//---------------------------------------------------------------------------------------------//
-
-}else if (dataLayerType == 'udv') {
-  //log("UDV Transaction ID:" + userVar.ecommerce.purchase.actionField.id);
-  const transactionID = userVar.ecommerce.purchase.actionField.id;
-  urlSRC.push("ORDER_ID="+transactionID);
-  const products = userVar.ecommerce.purchase.products;
-  //CHECKS IF THE USER HAS ENABLED ITEM CATEGORY
-  if (categoryCheckbox == true) {
-    products.forEach(function(pi, index) {
-      if (pi.id) {
-        productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
-        //log("ITEM_ID" + (index + 1) + "=" + pi.id);
-      }
-      if (pi.price) {
-        productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-        //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-      }
-      if (pi.quantity) {
-        productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
-        //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
-      }
-      if (pi.category) {
-        productsArray.push("CATEGORY" + (index + 1) + "=" + pi.category);
-        //log("CATEGORY" + (index + 1) + "=" + pi.category);
-      }
-    });
-  } else {
-    products.forEach(function(pi, index) {
-      if (pi.id) {
-        productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
-        //log("ITEM" + (index + 1) + "=" + pi.id);
-      }
-      if (pi.price) {
-        productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-        //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-      }
-      if (pi.quantity) {
-        productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
-        //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
-      }
-    });
-  }
-  //ADDS productsArray TO THE urlSRC ARRAY
-  urlSRC.push(productsArray.join("&"));
-
-  //CHECKS IF THE USER HAS ENABLED COUPONS
-  if (couponCheckbox == true) {
-    const couponTransaction = userVar.ecommerce.purchase.actionField.coupon;
-	if(couponTransaction !=undefined && couponTransaction.length > 0){
-		//log("couponTrans: " + couponTransaction.length);
-    	couponArray.push(couponTransaction);
+} else {
+  //CONVERSION TAG
+  //IF THE USER IS USING GTM'S DATA LAYER
+  if (dataLayerType == 'gtm') {
+    const transactionID = getDL('ecommerce.purchase.actionField.id');
+    urlSRC.push("ORDER_ID=" + transactionID);
+    const products = getDL('ecommerce.purchase.products');
+    //CHECKS IF THE USER HAS ENABLED ITEM CATEGORY
+    if (categoryCheckbox == true) {
+      products.forEach(function(pi, index) {
+        if (pi.id) {
+          productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
+          //log("ITEM_ID" + (index + 1) + "=" + pi.id);
+        }
+        if (pi.price) {
+          productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+          //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+        }
+        if (pi.quantity) {
+          productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
+          //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
+        }
+        if (pi.category) {
+          productsArray.push("CATEGORY" + (index + 1) + "=" + pi.category);
+          //log("CATEGORY" + (index + 1) + "=" + pi.category);
+        }
+      });
+    } else {
+      products.forEach(function(pi, index) {
+        if (pi.id) {
+          productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
+          //log("ITEM" + (index + 1) + "=" + pi.id);
+        }
+        if (pi.price) {
+          productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+          //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+        }
+        if (pi.quantity) {
+          productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
+          //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
+        }
+      });
     }
-    products.forEach(function(pi, index) {
-      if (pi.coupon){
-    	couponArray.push(pi.coupon);
-       	//log("couponItem: " + pi.coupon);
+    //ADDS productsArray TO THE urlSRC ARRAY
+    urlSRC.push(productsArray.join("&"));
+
+    //CHECKS IF THE USER HAS ENABLED COUPONS
+    if (couponCheckbox == true) {
+      const couponTransaction = getDL('ecommerce.purchase.actionField.coupon');
+      if (couponTransaction != undefined && couponTransaction.length > 0) {
+        //log("couponTrans: " + couponTransaction);
+        couponArray.push(couponTransaction);
       }
-    });
-    if(couponArray.length >0){
-    	urlSRC.push("COUPON=" + couponArray.join(","));
-  	}
-  }
+      products.forEach(function(pi, index) {
+        if (pi.coupon) {
+          couponArray.push(pi.coupon);
+          //log("couponItem: " + pi.coupon);
+        }
+      });
+      if (couponArray.length > 0) {
+        urlSRC.push("COUPON=" + couponArray.join(","));
+      }
+    }
 
-  //CHECKS IF THE USER HAS ENABLED USER TYPE
-  if(userTypeValidation == true){
-    urlSRC.push("NEW_TO_FILE=" + userType);
-  }
+    //CHECKS IF THE USER HAS ENABLED USER TYPE
+    if (userTypeValidation == true) {
+      urlSRC.push("NEW_TO_FILE=" + userType);
+    }
 
-  //CHECKS IF THE USER HAS ENABLED PIXEL TYPE
-  if(pixelTypeValidation == true){
-    urlSRC.push("TYPE=" + pixelType);
-  }else{
-    urlSRC.push("TYPE=1");
-  }
-  const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
-  log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
+    //CHECKS IF THE USER HAS ENABLED PIXEL TYPE
+    if (pixelTypeValidation == true) {
+      urlSRC.push("TYPE=" + pixelType);
+    } else {
+      urlSRC.push("TYPE=1");
+    }
+    //log("transactionID: " + transactionID);
+    //log("productsArray: " + productsArray.join("&"));
+    //log("couponArray: " + couponArray.join(","));
+    //log("urlSRC:" + urlSRC);
+    const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
+    log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
 
-  // If the script loaded successfully, log a message and signal success
-  const onSuccess = () => {
-    log('Pepperjam: Conversion script loaded successfully.');
-    data.gtmOnSuccess();
-  };
+    // If the script loaded successfully, log a message and signal success
+    const onSuccess = () => {
+      log("Pepperjam: Conversion script loaded successfully.");
+      data.gtmOnSuccess();
+    };
 
-  // If the script fails to load, log a message and signal failure
-  const onFailure = () => {
-    log("Pepperjam: Conversion script load failed.");
-    data.gtmOnFailure();
-  };
+    // If the script fails to load, log a message and signal failure
+    const onFailure = () => {
+      log("Pepperjam: Conversion script load failed.");
+      data.gtmOnFailure();
+    };
 
-  // If the URL input by the user matches the permissions set for the template,
-  // inject the script with the onSuccess and onFailure methods as callbacks.
-  if (queryPermission('inject_hidden_iframe', url)) {
-    injectScript(url, onSuccess);
-  } else {
-    log("Pepperjam: Conversion script load failed due to permissions mismatch.");
-    data.gtmOnFailure();
+    // If the URL input by the user matches the permissions set for the template,
+    // inject the script with the onSuccess and onFailure methods as callbacks.
+    if (queryPermission('inject_hidden_iframe', url)) {
+      injectIframe(url, onSuccess);
+    } else {
+      log("Pepperjam: Conversion script load failed due to permissions mismatch.");
+      data.gtmOnFailure();
+    }
+
+    //---------------------------------------------------------------------------------------------//
+    //-----------------------------------------USER DEFINED----------------------------------------//
+    //---------------------------------------------------------------------------------------------//
+
+  } else if (dataLayerType == 'udv') {
+    //log("UDV Transaction ID:" + userVar.ecommerce.purchase.actionField.id);
+    const transactionID = userVar.ecommerce.purchase.actionField.id;
+    urlSRC.push("ORDER_ID=" + transactionID);
+    const products = userVar.ecommerce.purchase.products;
+    //CHECKS IF THE USER HAS ENABLED ITEM CATEGORY
+    if (categoryCheckbox == true) {
+      products.forEach(function(pi, index) {
+        if (pi.id) {
+          productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
+          //log("ITEM_ID" + (index + 1) + "=" + pi.id);
+        }
+        if (pi.price) {
+          productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+          //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+        }
+        if (pi.quantity) {
+          productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
+          //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
+        }
+        if (pi.category) {
+          productsArray.push("CATEGORY" + (index + 1) + "=" + pi.category);
+          //log("CATEGORY" + (index + 1) + "=" + pi.category);
+        }
+      });
+    } else {
+      products.forEach(function(pi, index) {
+        if (pi.id) {
+          productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
+          //log("ITEM" + (index + 1) + "=" + pi.id);
+        }
+        if (pi.price) {
+          productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+          //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+        }
+        if (pi.quantity) {
+          productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
+          //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
+        }
+      });
+    }
+    //ADDS productsArray TO THE urlSRC ARRAY
+    urlSRC.push(productsArray.join("&"));
+
+    //CHECKS IF THE USER HAS ENABLED COUPONS
+    if (couponCheckbox == true) {
+      const couponTransaction = userVar.ecommerce.purchase.actionField.coupon;
+      if (couponTransaction != undefined && couponTransaction.length > 0) {
+        //log("couponTrans: " + couponTransaction.length);
+        couponArray.push(couponTransaction);
+      }
+      products.forEach(function(pi, index) {
+        if (pi.coupon) {
+          couponArray.push(pi.coupon);
+          //log("couponItem: " + pi.coupon);
+        }
+      });
+      if (couponArray.length > 0) {
+        urlSRC.push("COUPON=" + couponArray.join(","));
+      }
+    }
+
+    //CHECKS IF THE USER HAS ENABLED USER TYPE
+    if (userTypeValidation == true) {
+      urlSRC.push("NEW_TO_FILE=" + userType);
+    }
+
+    //CHECKS IF THE USER HAS ENABLED PIXEL TYPE
+    if (pixelTypeValidation == true) {
+      urlSRC.push("TYPE=" + pixelType);
+    } else {
+      urlSRC.push("TYPE=1");
+    }
+    const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
+    log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
+
+    // If the script loaded successfully, log a message and signal success
+    const onSuccess = () => {
+      log('Pepperjam: Conversion script loaded successfully.');
+      data.gtmOnSuccess();
+    };
+
+    // If the script fails to load, log a message and signal failure
+    const onFailure = () => {
+      log("Pepperjam: Conversion script load failed.");
+      data.gtmOnFailure();
+    };
+
+    // If the URL input by the user matches the permissions set for the template,
+    // inject the script with the onSuccess and onFailure methods as callbacks.
+    if (queryPermission('inject_hidden_iframe', url)) {
+      injectIframe(url, onSuccess);
+    } else {
+      log("Pepperjam: Conversion script load failed due to permissions mismatch.");
+      data.gtmOnFailure();
+    }
   }
 }
 
@@ -415,6 +510,32 @@ ___WEB_PERMISSIONS___
           }
         }
       ]
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "inject_hidden_iframe",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "urls",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "https://t.pepperjamnetwork.com/*"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
     },
     "isRequired": true
   },
@@ -451,7 +572,7 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "inject_hidden_iframe",
+        "publicId": "inject_script",
         "versionId": "1"
       },
       "param": [
@@ -462,7 +583,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://t.pepperjamnetwork.com/*"
+                "string": "https://container.pepperjam.com/"
               }
             ]
           }
@@ -484,4 +605,4 @@ scenarios: []
 
 ___NOTES___
 
-Created on 3/3/2020, 10:45:59 AM
+Created on 3/9/2020, 10:44:00 AM
