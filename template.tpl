@@ -26,7 +26,6 @@ ___INFO___
   ]
 }
 
-
 ___TEMPLATE_PARAMETERS___
 
 [
@@ -222,7 +221,6 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 // Require the necessary APIs
 const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
-const logToConsole = require('logToConsole');
 const injectIframe = require('injectHiddenIframe');
 const log = require('logToConsole');
 const getDL = require('copyFromDataLayer');
@@ -261,19 +259,19 @@ const couponArray = [];
 if (tagType == 'container') {
   const url = 'https://container.pepperjam.com/' + aID + '.js';
   // If the user chose to log debug output, initialize the logging method
-  const log = data.debug ? logToConsole : (() => {});
+  //const log = data.debug ? logToConsole : (() => {});
 
-  log('Pepperjam: Loading script from ' + aID);
+  //log('Pepperjam: Loading script from ' + aID);
 
   // If the script loaded successfully, log a message and signal success
   const onSuccess = () => {
-    log('Pepperjam: Global script loaded successfully.');
+    //log('Pepperjam: Global script loaded successfully.');
     data.gtmOnSuccess();
   };
 
   // If the script fails to load, log a message and signal failure
   const onFailure = () => {
-    log('Pepperjam: Global script load failed.');
+    //log('Pepperjam: Global script load failed.');
     data.gtmOnFailure();
   };
 
@@ -282,7 +280,7 @@ if (tagType == 'container') {
   if (queryPermission('inject_script', url)) {
     injectScript(url, onSuccess, onFailure);
   } else {
-    log('Pepperjam: Global script load failed due to permissions mismatch.');
+    //log('Pepperjam: Global script load failed due to permissions mismatch.');
     data.gtmOnFailure();
   }
 } else {
@@ -365,17 +363,17 @@ if (tagType == 'container') {
     //log("couponArray: " + couponArray.join(","));
     //log("urlSRC:" + urlSRC);
     const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
-    log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
+    //log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
 
     // If the script loaded successfully, log a message and signal success
     const onSuccess = () => {
-      log("Pepperjam: Conversion script loaded successfully.");
+      //log("Pepperjam: Conversion script loaded successfully.");
       data.gtmOnSuccess();
     };
 
     // If the script fails to load, log a message and signal failure
     const onFailure = () => {
-      log("Pepperjam: Conversion script load failed.");
+      //log("Pepperjam: Conversion script load failed.");
       data.gtmOnFailure();
     };
 
@@ -384,7 +382,7 @@ if (tagType == 'container') {
     if (queryPermission('inject_hidden_iframe', url)) {
       injectIframe(url, onSuccess);
     } else {
-      log("Pepperjam: Conversion script load failed due to permissions mismatch.");
+      //log("Pepperjam: Conversion script load failed due to permissions mismatch.");
       data.gtmOnFailure();
     }
 
@@ -466,17 +464,17 @@ if (tagType == 'container') {
       urlSRC.push("TYPE=1");
     }
     const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
-    log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
+    //log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
 
     // If the script loaded successfully, log a message and signal success
     const onSuccess = () => {
-      log('Pepperjam: Conversion script loaded successfully.');
+      //log('Pepperjam: Conversion script loaded successfully.');
       data.gtmOnSuccess();
     };
 
     // If the script fails to load, log a message and signal failure
     const onFailure = () => {
-      log("Pepperjam: Conversion script load failed.");
+      //log("Pepperjam: Conversion script load failed.");
       data.gtmOnFailure();
     };
 
@@ -485,7 +483,7 @@ if (tagType == 'container') {
     if (queryPermission('inject_hidden_iframe', url)) {
       injectIframe(url, onSuccess);
     } else {
-      log("Pepperjam: Conversion script load failed due to permissions mismatch.");
+      //log("Pepperjam: Conversion script load failed due to permissions mismatch.");
       data.gtmOnFailure();
     }
   }
@@ -605,4 +603,4 @@ scenarios: []
 
 ___NOTES___
 
-Created on 3/9/2020, 10:44:00 AM
+Created on 3/18/2020, 4:25:40 PM
