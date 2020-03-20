@@ -1,9 +1,9 @@
 homepage: "https://www.pepperjam.com"
 documentation: "https://www.pepperjam.com/documentation"
 versions:
-  New Versions:
+  #New Versions:
   - sha: a9224c46189826da2b88536f9ad0803cc3f24cfe;
     changeNotes: Commented logs out of template.
-  Older Version:
+  #Older Version:
   - sha: e2ea7127ea365194653c7b67d7aa7303c02c7f4a
     changeNotes: Consolidated two tag templates into one template. This is the initial commit of the new template.
