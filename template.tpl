@@ -242,7 +242,6 @@ const userTypeValidation = data.userTypeValidation;
 const userType = data.userType;
 //dataLayerType
 const dataLayerType = data.dataLayerType;
-//log('data =', data);
 
 //Optional Parameter - GTM Data Layer
 const categoryCheckbox = data.categoryCheckbox;
@@ -258,20 +257,14 @@ const couponArray = [];
 //
 if (tagType == 'container') {
   const url = 'https://container.pepperjam.com/' + aID + '.js';
-  // If the user chose to log debug output, initialize the logging method
-  //const log = data.debug ? logToConsole : (() => {});
-
-  //log('Pepperjam: Loading script from ' + aID);
 
   // If the script loaded successfully, log a message and signal success
   const onSuccess = () => {
-    //log('Pepperjam: Global script loaded successfully.');
     data.gtmOnSuccess();
   };
 
   // If the script fails to load, log a message and signal failure
   const onFailure = () => {
-    //log('Pepperjam: Global script load failed.');
     data.gtmOnFailure();
   };
 
@@ -280,7 +273,6 @@ if (tagType == 'container') {
   if (queryPermission('inject_script', url)) {
     injectScript(url, onSuccess, onFailure);
   } else {
-    //log('Pepperjam: Global script load failed due to permissions mismatch.');
     data.gtmOnFailure();
   }
 } else {
@@ -295,34 +287,27 @@ if (tagType == 'container') {
       products.forEach(function(pi, index) {
         if (pi.id) {
           productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
-          //log("ITEM_ID" + (index + 1) + "=" + pi.id);
         }
-        if (pi.price) {
+        if (typeof(pi.price) != "undefined") {
           productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-          //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
         }
         if (pi.quantity) {
           productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
-          //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
         }
         if (pi.category) {
           productsArray.push("CATEGORY" + (index + 1) + "=" + pi.category);
-          //log("CATEGORY" + (index + 1) + "=" + pi.category);
         }
       });
     } else {
       products.forEach(function(pi, index) {
         if (pi.id) {
           productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
-          //log("ITEM" + (index + 1) + "=" + pi.id);
         }
-        if (pi.price) {
+        if (typeof(pi.price) != "undefined") {
           productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-          //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
         }
         if (pi.quantity) {
           productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
-          //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
         }
       });
     }
@@ -333,13 +318,13 @@ if (tagType == 'container') {
     if (couponCheckbox == true) {
       const couponTransaction = getDL('ecommerce.purchase.actionField.coupon');
       if (couponTransaction != undefined && couponTransaction.length > 0) {
-        //log("couponTrans: " + couponTransaction);
+
         couponArray.push(couponTransaction);
       }
       products.forEach(function(pi, index) {
         if (pi.coupon) {
           couponArray.push(pi.coupon);
-          //log("couponItem: " + pi.coupon);
+
         }
       });
       if (couponArray.length > 0) {
@@ -358,22 +343,16 @@ if (tagType == 'container') {
     } else {
       urlSRC.push("TYPE=1");
     }
-    //log("transactionID: " + transactionID);
-    //log("productsArray: " + productsArray.join("&"));
-    //log("couponArray: " + couponArray.join(","));
-    //log("urlSRC:" + urlSRC);
+
     const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
-    //log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
 
     // If the script loaded successfully, log a message and signal success
     const onSuccess = () => {
-      //log("Pepperjam: Conversion script loaded successfully.");
       data.gtmOnSuccess();
     };
 
     // If the script fails to load, log a message and signal failure
     const onFailure = () => {
-      //log("Pepperjam: Conversion script load failed.");
       data.gtmOnFailure();
     };
 
@@ -382,7 +361,6 @@ if (tagType == 'container') {
     if (queryPermission('inject_hidden_iframe', url)) {
       injectIframe(url, onSuccess);
     } else {
-      //log("Pepperjam: Conversion script load failed due to permissions mismatch.");
       data.gtmOnFailure();
     }
 
@@ -400,34 +378,27 @@ if (tagType == 'container') {
       products.forEach(function(pi, index) {
         if (pi.id) {
           productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
-          //log("ITEM_ID" + (index + 1) + "=" + pi.id);
         }
-        if (pi.price) {
+        if (typeof(pi.price) != "undefined") {
           productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-          //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
         }
         if (pi.quantity) {
           productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
-          //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
         }
         if (pi.category) {
           productsArray.push("CATEGORY" + (index + 1) + "=" + pi.category);
-          //log("CATEGORY" + (index + 1) + "=" + pi.category);
         }
       });
     } else {
       products.forEach(function(pi, index) {
         if (pi.id) {
           productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
-          //log("ITEM" + (index + 1) + "=" + pi.id);
         }
-        if (pi.price) {
+        if (typeof(pi.price) != "undefined") {
           productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
-          //log("ITEM_PRICE" + (index + 1) + "=" + pi.price);
         }
         if (pi.quantity) {
           productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
-          //log("QUANTITY" + (index + 1) + "=" + pi.quantity);
         }
       });
     }
@@ -438,13 +409,11 @@ if (tagType == 'container') {
     if (couponCheckbox == true) {
       const couponTransaction = userVar.ecommerce.purchase.actionField.coupon;
       if (couponTransaction != undefined && couponTransaction.length > 0) {
-        //log("couponTrans: " + couponTransaction.length);
         couponArray.push(couponTransaction);
       }
       products.forEach(function(pi, index) {
         if (pi.coupon) {
           couponArray.push(pi.coupon);
-          //log("couponItem: " + pi.coupon);
         }
       });
       if (couponArray.length > 0) {
@@ -464,7 +433,6 @@ if (tagType == 'container') {
       urlSRC.push("TYPE=1");
     }
     const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
-    //log("Pepperjam: Loading script from " + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&"));
 
     // If the script loaded successfully, log a message and signal success
     const onSuccess = () => {
@@ -474,7 +442,6 @@ if (tagType == 'container') {
 
     // If the script fails to load, log a message and signal failure
     const onFailure = () => {
-      //log("Pepperjam: Conversion script load failed.");
       data.gtmOnFailure();
     };
 
@@ -483,7 +450,6 @@ if (tagType == 'container') {
     if (queryPermission('inject_hidden_iframe', url)) {
       injectIframe(url, onSuccess);
     } else {
-      //log("Pepperjam: Conversion script load failed due to permissions mismatch.");
       data.gtmOnFailure();
     }
   }
@@ -603,4 +569,4 @@ scenarios: []
 
 ___NOTES___
 
-Created on 3/18/2020, 4:25:40 PM
+Created on 4/10/2020, 1:25:41 PM
