@@ -224,6 +224,8 @@ const queryPermission = require('queryPermission');
 const injectIframe = require('injectHiddenIframe');
 const log = require('logToConsole');
 const getDL = require('copyFromDataLayer');
+const encodeUriComponent = require('encodeUriComponent');
+const makeString = require('makeString');
 
 //Tag Inputs
 const tagType = data.tagType;
@@ -251,12 +253,16 @@ const couponCheckbox = data.couponCheckbox;
 const userVar = data.userVar;
 
 const urlSRC = [];
-const productsArray = [];
 const couponArray = [];
+
+//This function is used to encode the components of the ecommerce object.
+function encodeEntry(key,value) {
+    return encodeUriComponent(key) + "=" + encodeUriComponent(value);
+}
 
 //
 if (tagType == 'container') {
-  const url = 'https://container.pepperjam.com/' + aID + '.js';
+  const url = 'https://container.pepperjam.com/' + encodeUriComponent(aID) + '.js';
 
   // If the script loaded successfully, log a message and signal success
   const onSuccess = () => {
@@ -280,71 +286,71 @@ if (tagType == 'container') {
   //IF THE USER IS USING GTM'S DATA LAYER
   if (dataLayerType == 'gtm') {
     const transactionID = getDL('ecommerce.purchase.actionField.id');
-    urlSRC.push("ORDER_ID=" + transactionID);
+    urlSRC.push(encodeEntry("ORDER_ID",transactionID));
     const products = getDL('ecommerce.purchase.products');
     //CHECKS IF THE USER HAS ENABLED ITEM CATEGORY
     if (categoryCheckbox == true) {
       products.forEach(function(pi, index) {
         if (pi.id) {
-          productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
+          urlSRC.push(encodeEntry("ITEM_ID" + (index + 1), makeString(pi.id)));
         }
         if (typeof(pi.price) != "undefined") {
-          productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+          urlSRC.push(encodeEntry("ITEM_PRICE" + (index + 1), makeString(pi.price)));
         }
         if (pi.quantity) {
-          productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
+          urlSRC.push(encodeEntry("QUANTITY" + (index + 1),makeString(pi.quantity)));
         }
         if (pi.category) {
-          productsArray.push("CATEGORY" + (index + 1) + "=" + pi.category);
+          urlSRC.push(encodeEntry("CATEGORY" + (index + 1), makeString(pi.category)));
         }
       });
     } else {
       products.forEach(function(pi, index) {
         if (pi.id) {
-          productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
+          urlSRC.push(encodeEntry("ITEM_ID" + (index + 1), makeString(pi.id)));
         }
         if (typeof(pi.price) != "undefined") {
-          productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+          urlSRC.push(encodeEntry("ITEM_PRICE" + (index + 1), makeString(pi.price)));
         }
         if (pi.quantity) {
-          productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
+          urlSRC.push(encodeEntry("QUANTITY" + (index + 1),makeString(pi.quantity)));
         }
       });
     }
-    //ADDS productsArray TO THE urlSRC ARRAY
-    urlSRC.push(productsArray.join("&"));
+    //ADDS urlSRC TO THE urlSRC ARRAY
+    //urlSRC.push(urlSRC.join("&"));
 
     //CHECKS IF THE USER HAS ENABLED COUPONS
     if (couponCheckbox == true) {
       const couponTransaction = getDL('ecommerce.purchase.actionField.coupon');
       if (couponTransaction != undefined && couponTransaction.length > 0) {
 
-        couponArray.push(couponTransaction);
+        couponArray.push(makeString(couponTransaction));
       }
       products.forEach(function(pi, index) {
         if (pi.coupon) {
-          couponArray.push(pi.coupon);
+          couponArray.push(makeString(pi.coupon));
 
         }
       });
       if (couponArray.length > 0) {
-        urlSRC.push("COUPON=" + couponArray.join(","));
+        urlSRC.push(encodeEntry("COUPON",couponArray.join(",")));
       }
     }
 
     //CHECKS IF THE USER HAS ENABLED USER TYPE
     if (userTypeValidation == true) {
-      urlSRC.push("NEW_TO_FILE=" + userType);
+      urlSRC.push(encodeEntry("NEW_TO_FILE",makeString(userType)));
     }
 
     //CHECKS IF THE USER HAS ENABLED PIXEL TYPE
     if (pixelTypeValidation == true) {
-      urlSRC.push("TYPE=" + pixelType);
+      urlSRC.push(encodeEntry("TYPE",makeString(pixelType)));
     } else {
       urlSRC.push("TYPE=1");
     }
-
-    const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
+    //Create URL
+    const url = "https://t.pepperjamnetwork.com/track?INT=DYNAMIC&PROGRAM_ID=" + encodeUriComponent(programID) + "&" + urlSRC.join("&");
 
     // If the script loaded successfully, log a message and signal success
     const onSuccess = () => {
@@ -371,68 +377,70 @@ if (tagType == 'container') {
   } else if (dataLayerType == 'udv') {
     //log("UDV Transaction ID:" + userVar.ecommerce.purchase.actionField.id);
     const transactionID = userVar.ecommerce.purchase.actionField.id;
-    urlSRC.push("ORDER_ID=" + transactionID);
+    urlSRC.push(encodeEntry("ORDER_ID",transactionID));
     const products = userVar.ecommerce.purchase.products;
     //CHECKS IF THE USER HAS ENABLED ITEM CATEGORY
     if (categoryCheckbox == true) {
       products.forEach(function(pi, index) {
         if (pi.id) {
-          productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
+          urlSRC.push(encodeEntry("ITEM_ID" + (index + 1), makeString(pi.id)));
         }
         if (typeof(pi.price) != "undefined") {
-          productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+          urlSRC.push(encodeEntry("ITEM_PRICE" + (index + 1), makeString(pi.price)));
         }
         if (pi.quantity) {
-          productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
+          urlSRC.push(encodeEntry("QUANTITY" + (index + 1),makeString(pi.quantity)));
         }
         if (pi.category) {
-          productsArray.push("CATEGORY" + (index + 1) + "=" + pi.category);
+          urlSRC.push(encodeEntry("CATEGORY" + (index + 1), makeString(pi.category)));
         }
       });
     } else {
       products.forEach(function(pi, index) {
         if (pi.id) {
-          productsArray.push("ITEM_ID" + (index + 1) + "=" + pi.id);
+          urlSRC.push(encodeEntry("ITEM_ID" + (index + 1), makeString(pi.id)));
         }
         if (typeof(pi.price) != "undefined") {
-          productsArray.push("ITEM_PRICE" + (index + 1) + "=" + pi.price);
+          urlSRC.push(encodeEntry("ITEM_PRICE" + (index + 1), makeString(pi.price)));
         }
         if (pi.quantity) {
-          productsArray.push("QUANTITY" + (index + 1) + "=" + pi.quantity);
+          urlSRC.push(encodeEntry("QUANTITY" + (index + 1),makeString(pi.quantity)));
         }
       });
     }
-    //ADDS productsArray TO THE urlSRC ARRAY
-    urlSRC.push(productsArray.join("&"));
+    //ADDS urlSRC TO THE urlSRC ARRAY
+    //urlSRC.push(urlSRC.join("&"));
 
     //CHECKS IF THE USER HAS ENABLED COUPONS
     if (couponCheckbox == true) {
       const couponTransaction = userVar.ecommerce.purchase.actionField.coupon;
       if (couponTransaction != undefined && couponTransaction.length > 0) {
-        couponArray.push(couponTransaction);
+        couponArray.push(makeString(couponTransaction));
       }
       products.forEach(function(pi, index) {
         if (pi.coupon) {
-          couponArray.push(pi.coupon);
+          couponArray.push(makeString(pi.coupon));
         }
       });
       if (couponArray.length > 0) {
-        urlSRC.push("COUPON=" + couponArray.join(","));
+        urlSRC.push(encodeEntry("COUPON",couponArray.join(",")));
       }
     }
 
     //CHECKS IF THE USER HAS ENABLED USER TYPE
     if (userTypeValidation == true) {
-      urlSRC.push("NEW_TO_FILE=" + userType);
+      urlSRC.push(encodeEntry("NEW_TO_FILE",makeString(userType)));
     }
 
     //CHECKS IF THE USER HAS ENABLED PIXEL TYPE
     if (pixelTypeValidation == true) {
-      urlSRC.push("TYPE=" + pixelType);
+      urlSRC.push(encodeEntry("TYPE",makeString(pixelType)));
     } else {
       urlSRC.push("TYPE=1");
     }
-    const url = "https://t.pepperjamnetwork.com/track?" + "INT=DYNAMIC&PROGRAM_ID=" + programID + "&" + urlSRC.join("&");
+
+    //Create URL
+    const url = "https://t.pepperjamnetwork.com/track?INT=DYNAMIC&PROGRAM_ID=" + encodeUriComponent(programID) + "&" + urlSRC.join("&");
 
     // If the script loaded successfully, log a message and signal success
     const onSuccess = () => {
@@ -569,4 +577,4 @@ scenarios: []
 
 ___NOTES___
 
-Created on 4/10/2020, 1:25:41 PM
+Created on 6/15/2020, 1:31:11 PM
