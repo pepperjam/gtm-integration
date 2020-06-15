@@ -7,9 +7,7 @@ versions:
   #Older Versions:
   - sha: f45fe15f67cb378fc9f99ae2ce6db0e11040feb6
     changeNotes: Updated template to handle item prices that are set to 0. Also, removed logs from template.
- 
   - sha: a9224c46189826da2b88536f9ad0803cc3f24cfe
     changeNotes: Commented logs out of template.
-    
   - sha: e2ea7127ea365194653c7b67d7aa7303c02c7f4a
     changeNotes: Consolidated two tag templates into one template. This is the initial commit of the new template.
