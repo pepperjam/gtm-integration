@@ -2,9 +2,12 @@ homepage: "https://www.pepperjam.com"
 documentation: "https://support.pepperjam.com/s/article/Google-Tag-Manager-Community-Template-Guide"
 versions:
   #New Version:
-  - sha: f45fe15f67cb378fc9f99ae2ce6db0e11040feb6
-  changeNotes: Updated template to handle item prices that are set to 0. Also, removed logs from template.
+  - sha: 30498c1d01e3a94f0b3ce4ee417de2dba7cdfd8b
+  changeNotes: Updated template to encode user parameters for URLs.
   #Older Versions:
+  - sha: f45fe15f67cb378fc9f99ae2ce6db0e11040feb6
+    changeNotes: Updated template to handle item prices that are set to 0. Also, removed logs from template.
+ 
   - sha: a9224c46189826da2b88536f9ad0803cc3f24cfe
     changeNotes: Commented logs out of template.
     
