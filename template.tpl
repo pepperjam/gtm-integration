@@ -26,6 +26,7 @@ ___INFO___
   ]
 }
 
+
 ___TEMPLATE_PARAMETERS___
 
 [
@@ -62,6 +63,42 @@ ___TEMPLATE_PARAMETERS___
             "type": "NON_EMPTY"
           }
         ]
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "customDomainCheckbox1",
+        "checkboxText": "Enable Custom Domain",
+        "simpleValueType": true,
+        "alwaysInSummary": true,
+        "help": "\u003cli\u003eThe host part of the uri https://pepperjam.my-domain.com should match your primary domain.\u003c/li\u003e\n\u003cli\u003eThe sub-domain part of the uri https://pepperjam.my-domain.com will be a separate sub-domain setup for the purpose of integrating with the feature. It will need to be separate from any other sub-domain currently in use. Pepperjam is used as a placeholder in this instance.\u003c/li\u003e \n\u003cli\u003eYour custom domain must be provisioned in ascend before you can complete the integration.\u003c/li\u003e\n\u003cli\u003e Your custom domain must match the exact value entered in Ascend.\u003c/li\u003e\n\u003cli\u003e You can set up your domain in Ascend \u003ca href\u003d \"https://ascend.pepperjam.com/merchant/integration/tracking-domains\"\u003ehere.\u003c/a\u003e\u003c/li\u003e\n\n\u003cbr\u003e\u003c/br\u003e\nIf you change this from the default, you \u003cstrong\u003emust\u003c/strong\u003e edit the Permissions of the tag template accordingly.",
+        "subParams": [
+          {
+            "type": "TEXT",
+            "name": "customDomain1",
+            "simpleValueType": true,
+            "enablingConditions": [
+              {
+                "paramName": "customDomainCheckbox1",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "valueHint": "subdomain.yourdomain.com",
+            "valueValidators": [
+              {
+                "type": "NON_EMPTY"
+              },
+              {
+                "type": "REGEX",
+                "args": [
+                  "^(?!https://).*"
+                ],
+                "errorMessage": "Please enter only the hostname. Please remove the \"https://\" or \"http://."
+              }
+            ]
+          }
+        ],
+        "enablingConditions": []
       }
     ],
     "enablingConditions": [
@@ -89,6 +126,42 @@ ___TEMPLATE_PARAMETERS___
             "type": "NON_EMPTY"
           }
         ]
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "customDomainCheckbox2",
+        "checkboxText": "Enable Custom Domain",
+        "simpleValueType": true,
+        "alwaysInSummary": true,
+        "help": "\u003cli\u003eThe host part of the uri https://pepperjam.my-domain.com should match your primary domain.\u003c/li\u003e\n\u003cli\u003eThe sub-domain part of the uri https://pepperjam.my-domain.com will be a separate sub-domain setup for the purpose of integrating with the feature. It will need to be separate from any other sub-domain currently in use. Pepperjam is used as a placeholder in this instance.\u003c/li\u003e \n\u003cli\u003eYour custom domain must be provisioned in ascend before you can complete the integration.\u003c/li\u003e\n\u003cli\u003e Your custom domain must match the exact value entered in Ascend.\u003c/li\u003e\n\u003cli\u003e You can set up your domain in Ascend \u003ca href\u003d \"https://ascend.pepperjam.com/merchant/integration/tracking-domains\"\u003ehere.\u003c/a\u003e\u003c/li\u003e\n\n\u003cbr\u003e\u003c/br\u003e\nIf you change this from the default, you \u003cstrong\u003emust\u003c/strong\u003e edit the Permissions of the tag template accordingly.",
+        "subParams": [
+          {
+            "type": "TEXT",
+            "name": "customDomain2",
+            "simpleValueType": true,
+            "enablingConditions": [
+              {
+                "paramName": "customDomainCheckbox2",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "valueHint": "suddomain.yourdomain.com",
+            "valueValidators": [
+              {
+                "type": "NON_EMPTY"
+              },
+              {
+                "type": "REGEX",
+                "args": [
+                  "^(?!https://).*"
+                ],
+                "errorMessage": "Please enter only the hostname. Please remove the \"https://\" or \"http://."
+              }
+            ]
+          }
+        ],
+        "enablingConditions": []
       },
       {
         "type": "SELECT",
@@ -183,6 +256,32 @@ ___TEMPLATE_PARAMETERS___
         ]
       },
       {
+        "type": "CHECKBOX",
+        "name": "segment",
+        "checkboxText": "Custom Segment (Optional)",
+        "simpleValueType": true,
+        "help": "Custom Segment can be used to pass any attribute that is meaningful to you with the order. It should be in a STRING(64) format.",
+        "subParams": [
+          {
+            "type": "TEXT",
+            "name": "segmentType",
+            "simpleValueType": true,
+            "enablingConditions": [
+              {
+                "paramName": "segment",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "valueValidators": [
+              {
+                "type": "NON_EMPTY"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "type": "GROUP",
         "name": "optionalFieldsGTM",
         "displayName": "Optional Product Parameters",
@@ -201,6 +300,34 @@ ___TEMPLATE_PARAMETERS___
             "checkboxText": "Transaction/Item Coupon",
             "simpleValueType": true,
             "help": "Enable to collect transaction/item coupon data"
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "currencyCheckbox",
+            "checkboxText": "Currency",
+            "simpleValueType": true,
+            "subParams": [
+              {
+                "type": "TEXT",
+                "name": "currency",
+                "displayName": "Currency",
+                "simpleValueType": true,
+                "defaultValue": "USD",
+                "valueValidators": [
+                  {
+                    "type": "NON_EMPTY"
+                  }
+                ],
+                "enablingConditions": [
+                  {
+                    "paramName": "currencyCheckbox",
+                    "paramValue": true,
+                    "type": "EQUALS"
+                  }
+                ]
+              }
+            ],
+            "help": "The expected value of this parameter is the ISO 4217 3 letter currency code for the currency. I.E. USD, CAD, EUR, etc."
           }
         ]
       }
@@ -219,22 +346,26 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 // Require the necessary APIs
-const injectScript = require('injectScript');
-const queryPermission = require('queryPermission');
-const injectIframe = require('injectHiddenIframe');
-const log = require('logToConsole');
-const getDL = require('copyFromDataLayer');
-const encodeUriComponent = require('encodeUriComponent');
-const makeString = require('makeString');
+const injectScript = require("injectScript");
+const queryPermission = require("queryPermission");
+const injectIframe = require("injectHiddenIframe");
+const log = require("logToConsole");
+const getDL = require("copyFromDataLayer");
+const encodeUriComponent = require("encodeUriComponent");
+const makeString = require("makeString");
 
 //Tag Inputs
 const tagType = data.tagType;
 //Container Tag
 //Container ID
 const aID = data.advertiserID;
+const cdCheckbox1 = data.customDomainCheckbox1;
+const cd1 = data.customDomain1;
 //Conversion Tag
 //Program ID
 const programID = data.programID;
+const cdCheckbox2 = data.customDomainCheckbox2;
+const cd2 = data.customDomain2;
 //dropDown Input
 const pixelTypeValidation = data.pixelTypeValidation;
 //dropDown Value
@@ -246,8 +377,12 @@ const userType = data.userType;
 const dataLayerType = data.dataLayerType;
 
 //Optional Parameter - GTM Data Layer
+const currencyCheckbox = data.currencyCheckbox;
+const currency = data.currency;
 const categoryCheckbox = data.categoryCheckbox;
 const couponCheckbox = data.couponCheckbox;
+const segment = data.segment;
+const segmentType = data.segmentType;
 
 //User Defined Variable
 const userVar = data.userVar;
@@ -261,8 +396,15 @@ function encodeEntry(key,value) {
 }
 
 //
-if (tagType == 'container') {
-  const url = 'https://container.pepperjam.com/' + encodeUriComponent(aID) + '.js';
+if (tagType == "container") {
+  let url = "";
+  if(cdCheckbox1 == true){
+    url = "https://cdn." + encodeUriComponent(cd1) + "/" + encodeUriComponent(aID) + ".js";
+    log("Pepperjam: Container script loaded successfully: " + url);
+  }else{
+    url = "https://container.pepperjam.com/" + encodeUriComponent(aID) + ".js";
+    log("Pepperjam: Container script loaded successfully: " + url);
+  }
 
   // If the script loaded successfully, log a message and signal success
   const onSuccess = () => {
@@ -276,18 +418,18 @@ if (tagType == 'container') {
 
   // If the URL input by the user matches the permissions set for the template,
   // inject the script with the onSuccess and onFailure methods as callbacks.
-  if (queryPermission('inject_script', url)) {
+  if (queryPermission("inject_script", url)) {
     injectScript(url, onSuccess, onFailure);
   } else {
     data.gtmOnFailure();
   }
 } else {
   //CONVERSION TAG
-  //IF THE USER IS USING GTM'S DATA LAYER
-  if (dataLayerType == 'gtm') {
-    const transactionID = getDL('ecommerce.purchase.actionField.id');
+  //IF THE USER IS USING GTM"S DATA LAYER
+  if (dataLayerType == "gtm") {
+    const transactionID = getDL("ecommerce.purchase.actionField.id");
     urlSRC.push(encodeEntry("ORDER_ID",transactionID));
-    const products = getDL('ecommerce.purchase.products');
+    const products = getDL("ecommerce.purchase.products");
     //CHECKS IF THE USER HAS ENABLED ITEM CATEGORY
     if (categoryCheckbox == true) {
       products.forEach(function(pi, index) {
@@ -322,7 +464,7 @@ if (tagType == 'container') {
 
     //CHECKS IF THE USER HAS ENABLED COUPONS
     if (couponCheckbox == true) {
-      const couponTransaction = getDL('ecommerce.purchase.actionField.coupon');
+      const couponTransaction = getDL("ecommerce.purchase.actionField.coupon");
       if (couponTransaction != undefined && couponTransaction.length > 0) {
 
         couponArray.push(makeString(couponTransaction));
@@ -349,9 +491,27 @@ if (tagType == 'container') {
     } else {
       urlSRC.push("TYPE=1");
     }
+    
+    //ADDS CURRENCY
+    if (currencyCheckbox == true) {
+      urlSRC.push(encodeEntry("CURRENCY",makeString(currency)));
+    }
+    
+    //CHECKS IF THE USER HAS ENABLED SEGMENT
+    if (segment == true) {
+      urlSRC.push(encodeEntry("SEGMENT",makeString(segmentType)));
+    }
+    
     //Create URL
-    const url = "https://t.pepperjamnetwork.com/track?INT=DYNAMIC&PROGRAM_ID=" + encodeUriComponent(programID) + "&" + urlSRC.join("&");
-
+    let url = "";
+    if(cdCheckbox2 == true){
+      url = "https://" + encodeUriComponent(cd2) + "/track?INT=DYNAMIC&PROGRAM_ID=" + encodeUriComponent(programID) + "&" + urlSRC.join("&");
+      //log("Pepperjam: Conversion url: " + url);
+    }else{
+      url = "https://t.pepperjamnetwork.com/track?INT=DYNAMIC&PROGRAM_ID=" + encodeUriComponent(programID) + "&" + urlSRC.join("&");
+      //log("Pepperjam: Conversion url: " + url);
+  }
+    
     // If the script loaded successfully, log a message and signal success
     const onSuccess = () => {
       data.gtmOnSuccess();
@@ -364,7 +524,7 @@ if (tagType == 'container') {
 
     // If the URL input by the user matches the permissions set for the template,
     // inject the script with the onSuccess and onFailure methods as callbacks.
-    if (queryPermission('inject_hidden_iframe', url)) {
+    if (queryPermission("inject_hidden_iframe", url)) {
       injectIframe(url, onSuccess);
     } else {
       data.gtmOnFailure();
@@ -374,7 +534,7 @@ if (tagType == 'container') {
     //-----------------------------------------USER DEFINED----------------------------------------//
     //---------------------------------------------------------------------------------------------//
 
-  } else if (dataLayerType == 'udv') {
+  } else if (dataLayerType == "udv") {
     //log("UDV Transaction ID:" + userVar.ecommerce.purchase.actionField.id);
     const transactionID = userVar.ecommerce.purchase.actionField.id;
     urlSRC.push(encodeEntry("ORDER_ID",transactionID));
@@ -438,13 +598,27 @@ if (tagType == 'container') {
     } else {
       urlSRC.push("TYPE=1");
     }
-
+    
+    //ADDS CURRENCY
+    if (currencyCheckbox == true) {
+      urlSRC.push(encodeEntry("CURRENCY",makeString(currency)));
+    }
+    //CHECKS IF THE USER HAS ENABLED SEGMENT
+    if (segment == true) {
+      urlSRC.push(encodeEntry("SEGMENT",makeString(segmentType)));
+    }
+    
     //Create URL
-    const url = "https://t.pepperjamnetwork.com/track?INT=DYNAMIC&PROGRAM_ID=" + encodeUriComponent(programID) + "&" + urlSRC.join("&");
+    let url = "";
+    if(cdCheckbox2 == true){
+      url = "https://" + encodeUriComponent(cd2) + "/track?INT=DYNAMIC&PROGRAM_ID=" + encodeUriComponent(programID) + "&" + urlSRC.join("&");
+    }else{
+      url = "https://t.pepperjamnetwork.com/track?INT=DYNAMIC&PROGRAM_ID=" + encodeUriComponent(programID) + "&" + urlSRC.join("&");
+  }
 
     // If the script loaded successfully, log a message and signal success
     const onSuccess = () => {
-      //log('Pepperjam: Conversion script loaded successfully.');
+      //log("Pepperjam: Conversion script loaded successfully.");
       data.gtmOnSuccess();
     };
 
@@ -455,7 +629,7 @@ if (tagType == 'container') {
 
     // If the URL input by the user matches the permissions set for the template,
     // inject the script with the onSuccess and onFailure methods as callbacks.
-    if (queryPermission('inject_hidden_iframe', url)) {
+    if (queryPermission("inject_hidden_iframe", url)) {
       injectIframe(url, onSuccess);
     } else {
       data.gtmOnFailure();
@@ -483,6 +657,9 @@ ___WEB_PERMISSIONS___
         }
       ]
     },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
     "isRequired": true
   },
   {
@@ -500,6 +677,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://t.pepperjamnetwork.com/*"
+              },
+              {
+                "type": 1,
+                "string": "https://p2.halloween-headquarters.com/*"
               }
             ]
           }
@@ -556,6 +737,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://container.pepperjam.com/"
+              },
+              {
+                "type": 1,
+                "string": "https://cdn.p2.halloween-headquarters.com/"
               }
             ]
           }
@@ -572,7 +757,95 @@ ___WEB_PERMISSIONS___
 
 ___TESTS___
 
-scenarios: []
+scenarios:
+- name: Inject Container Library
+  code: |
+    // Call runCode to run the template's code.
+    runCode('containerMock');
+
+    // Verify that the tag finished successfully.
+    assertApi('gtmOnSuccess').wasCalled();
+- name: Inject Conversion Library
+  code: |-
+    // Call runCode to run the template's code.
+    runCode('conversionUDMock');
+
+    // Verify that the tag finished successfully.
+    assertApi('gtmOnSuccess').wasCalled();
+setup: |-
+  const containerMock = {
+    tagType: 'container',
+    advertiserID: 3423209508,
+    customDomainCheckbox1: 'false'
+  };
+
+
+  const conversionGTMMock = {
+    tagType: 'conversion',
+    programID: 9567,
+    customDomainCheckbox2: 'false',
+    dataLayerType: 'gtm',
+    pixelTypeValidation: 'false',
+    userTypeValidation: 'false',
+    categoryCheckbox: 'true',
+    couponCheckbox: 'true',
+    segment: 'false'
+  };
+
+  const conversionUDMock = {
+    tagType: 'conversion',
+    programID: 9567,
+    customDomainCheckbox2: 'false',
+    dataLayerType: 'udv',
+    userVar: [{}],
+    pixelTypeValidation: 'false',
+    userTypeValidation: 'false',
+    categoryCheckbox: 'true',
+    couponCheckbox: 'true',
+    segment: 'false'
+  };
+
+  const mockEec = {
+      ecommerce: {
+      purchase: {
+        actionField: {
+          id: 'T12345',
+          affiliation: 'Online Store',
+          revenue: '35.43',
+          tax:'4.90',
+          shipping: '5.99',
+          coupon: 'SUMMER_SALE'
+        },
+        products: [{
+          name: 'TA T-Shirt',
+          id: '12345',
+          price: '15.25',
+          brand: 'OP',
+          category: 'Apparel',
+          variant: 'Gray',
+          quantity: 1,
+          coupon: ''
+         },
+         {
+          name: 'DFS T-Shirt',
+          id: '67890',
+          price: '33.75',
+          brand: 'OP',
+          category: 'Apparel',
+          variant: 'Black',
+          quantity: 1
+         }]
+      }
+    }
+  };
+
+  // Create injectScript mock
+  let success, failure;
+  mock('injectScript', (url, onsuccess, onfailure) => {
+    success = onsuccess;
+    failure = onfailure;
+    onsuccess();
+  });
 
 
 ___NOTES___
