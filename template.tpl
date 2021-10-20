@@ -1,3 +1,8 @@
+
+b3eeb3efd902e27c7197933bb1ec9ed3e5f15ea7
+
+// old
+30498c1d01e3a94f0b3ce4ee417de2dba7cdfd8b
 ___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
@@ -677,10 +682,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://t.pepperjamnetwork.com/*"
-              },
-              {
-                "type": 1,
-                "string": "https://p2.halloween-headquarters.com/*"
               }
             ]
           }
@@ -737,10 +738,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://container.pepperjam.com/"
-              },
-              {
-                "type": 1,
-                "string": "https://cdn.p2.halloween-headquarters.com/"
               }
             ]
           }
@@ -851,3 +848,5 @@ setup: |-
 ___NOTES___
 
 Created on 6/15/2020, 1:31:11 PM
+
+
