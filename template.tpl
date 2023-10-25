@@ -805,10 +805,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://t.pepperjamnetwork.com/*"
-              },
-              {
-                "type": 1,
-                "string": "https://p4.halloween-headquarters.com/*"
               }
             ]
           }
@@ -872,10 +868,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://container.pepperjam.com/"
-              },
-              {
-                "type": 1,
-                "string": "https://cdn.p4.halloween-headquarters.com/"
               }
             ]
           }
