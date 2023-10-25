@@ -1,10 +1,13 @@
-homepage: "https://www.pepperjam.com"
-documentation: "https://support.pepperjam.com/s/article/Google-Tag-Manager-Community-Template-Guide"
+homepage: "https://www.ascendpartner.com/"
+documentation: "https://ascendpartner.zendesk.com/hc/en-gb/articles/13220229783069-Google-Tag-Manager-Community-Template-Guide"
 versions:
   #New Version: 
+  - sha: 2c5980e1a09b4f1c5b885b13cc9ab5c3cb5ef061
+    changeNotes: Updated template for GA4 data layers.
+  
+  #Older Versions:
   - sha: 1f8343b7d9aec202b0de6ecc7c2c05b5d3063993
     changeNotes: Updated template with custom domain functionality and additional reporting parameters. Editted template permissions.
-  #Older Versions:
   - sha: b3eeb3efd902e27c7197933bb1ec9ed3e5f15ea7
     changeNotes: Updated template with custom domain functionality and additional reporting parameters.
   - sha: 30498c1d01e3a94f0b3ce4ee417de2dba7cdfd8b
