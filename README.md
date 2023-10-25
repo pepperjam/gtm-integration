@@ -3,12 +3,12 @@ Ascend by Partnerize is a performance marketing solutions provider powering grow
 
 # Before You Begin
 To begin, you need your Ascend Container Tag ID and Program ID. You can get these from your Ascend account manager or login to Ascend(TM) to locate your unique IDs:
-<li>The Container Tag ID can be found on https://ascend.pepperjam.com/merchant/integration on the Container Tag tab. It is labeled as the Ascend Imression - Id. </li>
+<li>The Container Tag ID can be found on https://www.ascendpartner.com/merchant/integration on the Container Tag tab. It is labeled as the Ascend Imression - Id. </li>
 <li>The Ascend ID, or PID is in the header of every page in the Ascend(TM) platform. </li>
 
 # User Guide
-https://support.ascendpartner.com/s/article/Google-Tag-Manager-Community-Template-Guide
+https://ascendpartner.zendesk.com/hc/en-gb/articles/13220229783069-Google-Tag-Manager-Community-Template-Guide 
 
 # Support
-<li>Support website: https://support.ascendpartner.com/s/</li>
+<li>Support website: https://ascendpartner.zendesk.com/hc/en-gb</li>
 <li>Support email: ascend.support@partnerize.com</li>
